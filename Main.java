@@ -1,9 +1,9 @@
 import java.util.Scanner;
+import java.util.Random;
 
 
 public class Main {
-    public Main() {
-    }
+    private static double saldo = 100.0;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -19,6 +19,7 @@ public class Main {
             opcion = scanner.nextInt();
             switch (opcion) {
                 case 1:
+                    consultarSaldo();
                     break;
                 case 2:
                     blackjack();
@@ -39,10 +40,35 @@ public class Main {
 
     }
 
+
+    public static void consultarSaldo() {
+        System.out.println("Saldo actual: $" + saldo);
+    }
+
     public static void blackjack() {
     }
 
-    public static void slot() {
+    public static void slot(Scanner scanner) {
+        double apuesta = solicitarApuesta(scanner);
+        int vecesGirar = solicitarVecesGirar(scanner);
+
+        for (int i = 0; i < vecesGirar; i++) {
+            char[] simbolos = generarSimbolos();
+            mostrarSimbolos(simbolos);
+
+            double ganancia = calcularGanancia(simbolos, apuesta);
+            saldo += ganancia;
+
+            if (ganancia > 0) {
+                System.out.println("¡GANASTE! Ganancia: $" + ganancia);
+            } else {
+                System.out.println("Perdiste. ¡Suerte la próxima vez!");
+            }
+
+            System.out.println("Saldo actual: $" + saldo);
+        }
+
+
     }
 
     public static void ruleta() {
