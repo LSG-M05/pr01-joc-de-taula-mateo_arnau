@@ -122,8 +122,30 @@ import java.util.Random;
         }
 
         public static void repartirCarta(List<String> mano, List<String> mazo) {
+            mano.add(mazo.remove(0));
 
         }
         public static int calcularValorMano(List<String> mano) {
+            int valor = 0;
+            int ases = 0;
 
+            for (String carta : mano) {
+                String valorCarta = carta.split(" ")[0];
+                if (valorCarta.equals("As")) {
+                    ases++;
+                    valor += 11;
+                } else if (valorCarta.equals("J") || valorCarta.equals("Q") || valorCarta.equals("K")) {
+                    valor += 10;
+                } else {
+                    valor += Integer.parseInt(valorCarta);
+                }
+            }
+
+            while (valor > 21 && ases > 0) {
+                valor -= 10;
+                ases--;
+            }
+
+            return valor;
         }
+}
