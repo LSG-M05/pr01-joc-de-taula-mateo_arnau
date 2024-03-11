@@ -1,4 +1,7 @@
-    import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Random;
 
 
     public class Main {
@@ -53,6 +56,36 @@
 
             List<String> manoJugador = new ArrayList<>();
             List<String> manoCrupier = new ArrayList<>();
+            repartirCarta(manoJugador, deck);
+            repartirCarta(manoCrupier, deck);
+            repartirCarta(manoJugador, deck);
+            repartirCarta(manoCrupier, deck);
+
+            System.out.println("Tu mano: " + manoJugador);
+            System.out.println("Mano del crupier: [" + manoCrupier.get(0) + ", ***]");
+
+            if (calcularValorMano(manoJugador) == 21) {
+                System.out.println("¡Blackjack! ¡Felicidades! Has ganado $" + (apuesta * 2.5) + ".");
+                saldo += apuesta * 2.5;
+                return;
+            }
+            while (true) {
+                System.out.print("¿Quieres pedir otra carta o plantarte? (pedir/plantar): ");
+                String decision = scanner.next();
+                if (decision.equalsIgnoreCase("pedir")) {
+                    repartirCarta(manoJugador, deck);
+                    System.out.println("Tu mano: " + manoJugador);
+                    if (calcularValorMano(manoJugador) > 21) {
+                        System.out.println("Te has pasado de 21. Has perdido $" + apuesta + ".");
+                        saldo -= apuesta;
+                        return;
+                    }
+                } else if (decision.equalsIgnoreCase("plantar")) {
+                    break;
+                } else {
+                    System.out.println("Opción inválida. Por favor, ingresa 'pedir' o 'plantar'.");
+                }
+            }
 
 
 
@@ -69,3 +102,12 @@
         }
 
         public static void barajarMazo(List<String> mazo) {
+
+        }
+
+        public static void repartirCarta(List<String> mano, List<String> mazo) {
+
+        }
+        public static int calcularValorMano(List<String> mano) {
+
+        }
