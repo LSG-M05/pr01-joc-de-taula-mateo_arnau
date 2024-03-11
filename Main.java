@@ -1,15 +1,17 @@
 import java.util.Scanner;
 import java.util.Random;
 
-
 public class Main {
     private static double saldo = 500.0;
+    private static final char[] SIMBOLOS = {'0', 'B', 'A', '&', '#', '@', '$'};
+    private static final double[] GANANCIAS = {0.5, 0.8, 1.0, 1.5, 2.0, 2.5, 4.0, 1.0, 1.5, 2.0, 3.0, 5.0, 10.0, 50.0};
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         int opcion;
         do {
+            System.out.println("Bienvenido a nuestro casino!!!");
             System.out.println("1. Consultar saldo");
             System.out.println("2. Blackjack");
             System.out.println("3. Slot");
@@ -25,7 +27,7 @@ public class Main {
                     blackjack();
                     break;
                 case 3:
-                    slot();
+                    slot(scanner);
                     break;
                 case 4:
                     ruleta();
@@ -37,7 +39,6 @@ public class Main {
                     System.out.println("Opción no válida. Por favor, elige una opción del 1 al 5.");
             }
         } while (opcion != 5);
-
     }
 
 
@@ -46,10 +47,22 @@ public class Main {
     }
 
     public static void blackjack() {
+
     }
 
     public static void slot(Scanner scanner) {
+        if (saldo <= 0) {
+            System.out.println("No tienes suficiente saldo para apostar. ¡Recarga tu cuenta!");
+            return;
+        }
+
         double apuesta = solicitarApuesta(scanner);
+
+        if (apuesta > saldo) {
+            System.out.println("No puedes apostar más de lo que tienes en tu saldo.");
+            return;
+        }
+
         int vecesGirar = solicitarVecesGirar(scanner);
 
         for (int i = 0; i < vecesGirar; i++) {
@@ -66,12 +79,17 @@ public class Main {
             }
 
             System.out.println("Saldo actual: $" + saldo);
+
+            if (saldo <= 0) {
+                System.out.println("Te has quedado sin saldo. ¡Recarga tu cuenta!");
+                break;
+            }
         }
-
-
     }
 
+
     public static void ruleta() {
+
     }
 
 
@@ -117,4 +135,36 @@ public class Main {
         }
     }
 
+    private static int solicitarVecesGirar(Scanner scanner) {
+        System.out.println("¿Cuántas veces deseas girar (1 o 5)?");
+        return scanner.nextInt();
+    }
+
+    private static char[] generarSimbolos() {
+        Random random = new Random();
+        char[] simbolos = new char[3];
+        for (int i = 0; i < 3; i++) {
+            simbolos[i] = SIMBOLOS[random.nextInt(SIMBOLOS.length)];
+        }
+        return simbolos;
+    }
+
+    private static void mostrarSimbolos(char[] simbolos) {
+        System.out.println("[" + simbolos[0] + "] [" + simbolos[1] + "] [" + simbolos[2] + "]");
+    }
+
+    private static double calcularGanancia(char[] simbolos, double apuesta) {
+        String combinacion = "" + simbolos[0] + simbolos[1] + simbolos[2];
+        for (int i = 0; i < SIMBOLOS.length; i++) {
+            if (combinacion.equals("" + SIMBOLOS[i] + SIMBOLOS[i] + SIMBOLOS[i]))
+                return apuesta * GANANCIAS[i + SIMBOLOS.length]; // Ganancia por combinación de tres símbolos iguales
+            else if (combinacion.substring(0, 2).equals("" + SIMBOLOS[i] + SIMBOLOS[i]) ||
+                    combinacion.substring(1, 3).equals("" + SIMBOLOS[i] + SIMBOLOS[i]))
+                return apuesta * GANANCIAS[i]; // Ganancia por combinación de dos símbolos iguales
+        }
+        return -apuesta; // Perdiste
+    }
+
+
 }
+
