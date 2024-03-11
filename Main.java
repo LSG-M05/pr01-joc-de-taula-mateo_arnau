@@ -42,17 +42,30 @@
         public static void blackjack() {
             System.out.println("--- Blackjack ---");
             System.out.println("Tu saldo actual es: $" + saldo);
-            System.out.print("Ingresa la cantidad que deseas apostar: $");
-            double apuesta = scanner.nextDouble();
+            double apuesta = solicitarApuesta(scanner);
 
             if (apuesta > saldo) {
                 System.out.println("No tienes suficiente saldo para realizar esa apuesta.");
                 return;
         }
+            List<String> deck = crearMazo();
+            barajarMazo(deck);
 
-        public static void slot() {
+            List<String> manoJugador = new ArrayList<>();
+            List<String> manoCrupier = new ArrayList<>();
+
+
+
+
+            public static void slot() {
         }
 
         public static void ruleta() {
         }
     }
+
+        public static List<String> crearMazo() {
+
+        }
+
+        public static void barajarMazo(List<String> mazo) {
