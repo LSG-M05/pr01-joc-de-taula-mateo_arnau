@@ -87,6 +87,26 @@ import java.util.Random;
                 }
             }
 
+            System.out.println("Mano del crupier: " + manoCrupier);
+            while (calcularValorMano(manoCrupier) < 17) {
+                repartirCarta(manoCrupier, deck);
+                System.out.println("Mano del crupier: " + manoCrupier);
+            }
+
+            int valorJugador = calcularValorMano(manoJugador);
+            int valorCrupier = calcularValorMano(manoCrupier);
+
+            if (valorJugador > valorCrupier || valorCrupier > 21) {
+                System.out.println("¡Felicidades! Has ganado $" + apuesta + ".");
+                saldo += apuesta;
+            } else if (valorJugador == valorCrupier) {
+                System.out.println("Es un empate. No ganas ni pierdes dinero.");
+            } else {
+                System.out.println("El crupier gana. Has perdido $" + apuesta + ".");
+                saldo -= apuesta;
+            }
+        }
+
 
 
 
