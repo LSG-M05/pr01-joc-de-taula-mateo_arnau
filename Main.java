@@ -98,10 +98,26 @@ import java.util.Random;
     }
 
         public static List<String> crearMazo() {
+            List<String> mazo = new ArrayList<>();
+            String[] palos = {"Corazones", "Diamantes", "Tréboles", "Picas"};
+            String[] valores = {"As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 
+            for (String palo : palos) {
+                for (String valor : valores) {
+                    mazo.add(valor + " de " + palo);
+                }
+            }
+            return mazo;
         }
-
         public static void barajarMazo(List<String> mazo) {
+            Random random = new Random();
+            for (int i = mazo.size() - 1; i > 0; i--) {
+                int index = random.nextInt(i + 1);
+                String temp = mazo.get(index);
+                mazo.set(index, mazo.get(i));
+                mazo.set(i, temp);
+            }
+        }
 
         }
 
