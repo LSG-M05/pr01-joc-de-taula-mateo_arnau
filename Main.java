@@ -169,3 +169,22 @@ import java.util.Random;
             return valor;
         }
 }
+        public static void mostrarManoConValores(List<String> mano) {
+                System.out.print("[");
+                for (int i = 0; i < mano.size(); i++) {
+                String carta = mano.get(i);
+                String valorCarta = carta.split(" ")[0];
+                if (i > 0) {
+                System.out.print(", ");
+                }
+                if (valorCarta.equals("J") || valorCarta.equals("Q") || valorCarta.equals("K")) {
+                System.out.print("10");
+                } else if (valorCarta.equals("As")) {
+                System.out.print("11/1");
+                } else {
+                System.out.print(valorCarta);
+                }
+                }
+                System.out.println("]");
+                }
+
