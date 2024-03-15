@@ -216,6 +216,38 @@ public class Main {
         }
     }
 
+
+    enum Color {
+        ROJO,
+        NEGRO,
+        VERDE
+    }
+
+    private static void ganar(double monto) {
+        saldo += monto;
+        System.out.println("¡GANASTE! Ganancia: $" + monto);
+        System.out.println("Saldo actual: " +saldo);
+    }
+
+    private static void perder(double monto) {
+        saldo -= monto;
+        System.out.println("Perdiste. ¡Suerte la próxima vez!");
+        System.out.println("Saldo actual: " +saldo);
+    }
+
+    private static Color generarColor() {
+        Random random = new Random();
+        int resultado = random.nextInt(37);
+        if (resultado == 0)
+            return Color.VERDE;
+        else if (resultado >= 1 && resultado <= 18)
+            return Color.ROJO;
+        else
+            return Color.NEGRO;
+    }
+
+
+
     private static double solicitarApuesta(Scanner scanner) {
         System.out.println("Seleccione la cantidad de apuesta:");
         System.out.println("1. $0.2");
@@ -290,5 +322,4 @@ public class Main {
 
 
     }
-
 
