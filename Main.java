@@ -30,7 +30,7 @@ public class Main {
                     slot(scanner);
                     break;
                 case 4:
-                    ruleta();
+                    rizzRoulette(scanner);
                     break;
                 case 5:
                     System.out.println("Saliendo...");
@@ -88,9 +88,28 @@ public class Main {
     }
 
 
-    public static void ruleta() {
+    public static void rizzRoulette(Scanner scanner) {
+        if (saldo <= 0) {
+            System.out.println("No tienes suficiente saldo para apostar. ¡Recarga tu cuenta!");
+            return;
+        }
 
-    }
+        double apuesta = solicitarApuesta(scanner);
+        if (apuesta > saldo) {
+            System.out.println("No puedes apostar más de lo que tienes en tu saldo.");
+            return;
+        }
+
+        System.out.println("Seleccione el tipo de apuesta:");
+        System.out.println("1. Color (Rojo/Negro)");
+        System.out.println("2. Par o Impar");
+        System.out.println("3. Número");
+        System.out.println("4. Cuadrante");
+        int tipoApuesta = scanner.nextInt();
+
+
+
+        }
 
 
     private static double solicitarApuesta(Scanner scanner) {
@@ -157,14 +176,23 @@ public class Main {
         String combinacion = "" + simbolos[0] + simbolos[1] + simbolos[2];
         for (int i = 0; i < SIMBOLOS.length; i++) {
             if (combinacion.equals("" + SIMBOLOS[i] + SIMBOLOS[i] + SIMBOLOS[i]))
-                return apuesta * GANANCIAS[i + SIMBOLOS.length]; // Ganancia por combinación de tres símbolos iguales
+                return apuesta * GANANCIAS[i + SIMBOLOS.length];
             else if (combinacion.substring(0, 2).equals("" + SIMBOLOS[i] + SIMBOLOS[i]) ||
                     combinacion.substring(1, 3).equals("" + SIMBOLOS[i] + SIMBOLOS[i]))
-                return apuesta * GANANCIAS[i]; // Ganancia por combinación de dos símbolos iguales
+                return apuesta * GANANCIAS[i];
         }
-        return -apuesta; // Perdiste
+        return -apuesta;
     }
 
 
+    public static void ruleta() {
+        if (saldo <= 0) {
+            System.out.println("No tienes suficiente saldo para apostar. ¡Recarga tu cuenta!");
+            return;
+
+        }
+
+
+    }
 }
 
