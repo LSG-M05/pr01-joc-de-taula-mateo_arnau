@@ -175,6 +175,47 @@ public class Main {
             perder(apuesta);
     }
 
+    private static void apostarCuadrante(Scanner scanner, double apuesta) {
+        System.out.println("Seleccione el cuadrante:");
+        System.out.println("1. Cuadrante 1 (1-9)");
+        System.out.println("2. Cuadrante 2 (10-18)");
+        System.out.println("3. Cuadrante 3 (19-27)");
+        System.out.println("4. Cuadrante 4 (28-36)");
+        int cuadrante = scanner.nextInt();
+
+        Random random = new Random();
+        int resultado = random.nextInt(37); // Simulamos el giro de la ruleta
+
+        switch (cuadrante) {
+            case 1:
+                if (resultado > 0 && resultado < 10)
+                    ganar(apuesta * 3);
+                else
+                    perder(apuesta);
+                break;
+            case 2:
+                if (resultado > 9 && resultado < 19)
+                    ganar(apuesta * 3);
+                else
+                    perder(apuesta);
+                break;
+            case 3:
+                if (resultado > 18 && resultado < 28)
+                    ganar(apuesta * 3);
+                else
+                    perder(apuesta);
+                break;
+            case 4:
+                if (resultado > 27 && resultado < 37)
+                    ganar(apuesta * 3);
+                else
+                    perder(apuesta);
+                break;
+            default:
+                System.out.println("Cuadrante no válido.");
+        }
+    }
+
     private static double solicitarApuesta(Scanner scanner) {
         System.out.println("Seleccione la cantidad de apuesta:");
         System.out.println("1. $0.2");
