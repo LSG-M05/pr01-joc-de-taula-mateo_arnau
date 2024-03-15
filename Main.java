@@ -125,6 +125,21 @@ public class Main {
         }
     }
 
+
+    private static void apostarColor(Scanner scanner, double apuesta) {
+        System.out.println("Seleccione el color:");
+        System.out.println("1. Rojo");
+        System.out.println("2. Negro");
+        int color = scanner.nextInt();
+
+        Color resultado = generarColor();
+
+        if ((resultado == Color.ROJO && color == 1) || (resultado == Color.NEGRO && color == 2))
+            ganar(apuesta * 2);
+        else
+            perder(apuesta);
+    }
+
     private static double solicitarApuesta(Scanner scanner) {
         System.out.println("Seleccione la cantidad de apuesta:");
         System.out.println("1. $0.2");
@@ -198,14 +213,6 @@ public class Main {
     }
 
 
-    public static void ruleta() {
-        if (saldo <= 0) {
-            System.out.println("No tienes suficiente saldo para apostar. ¡Recarga tu cuenta!");
-            return;
-
-        }
-
-
     }
-}
+
 
