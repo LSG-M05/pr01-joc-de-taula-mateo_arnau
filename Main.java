@@ -107,10 +107,23 @@ public class Main {
         System.out.println("4. Cuadrante");
         int tipoApuesta = scanner.nextInt();
 
-
-
+        switch (tipoApuesta) {
+            case 1:
+                apostarColor(scanner, apuesta);
+                break;
+            case 2:
+                apostarParImpar(scanner, apuesta);
+                break;
+            case 3:
+                apostarNumero(scanner, apuesta);
+                break;
+            case 4:
+                apostarCuadrante(scanner, apuesta);
+                break;
+            default:
+                System.out.println("Opción no válida.");
         }
-
+    }
 
     private static double solicitarApuesta(Scanner scanner) {
         System.out.println("Seleccione la cantidad de apuesta:");
