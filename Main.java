@@ -162,6 +162,19 @@ public class Main {
         }
     }
 
+    private static void apostarNumero(Scanner scanner, double apuesta) {
+        System.out.println("Seleccione el número (0-36):");
+        int numero = scanner.nextInt();
+
+        Random random = new Random();
+        int resultado = random.nextInt(37); // Simulamos el giro de la ruleta
+
+        if (resultado == numero)
+            ganar(apuesta * 30);
+        else
+            perder(apuesta);
+    }
+
     private static double solicitarApuesta(Scanner scanner) {
         System.out.println("Seleccione la cantidad de apuesta:");
         System.out.println("1. $0.2");
