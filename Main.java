@@ -140,6 +140,28 @@ public class Main {
             perder(apuesta);
     }
 
+    private static void apostarParImpar(Scanner scanner, double apuesta) {
+        System.out.println("Seleccione par o impar:");
+        System.out.println("1. Par");
+        System.out.println("2. Impar");
+        int parImpar = scanner.nextInt();
+
+        Random random = new Random();
+        int resultado = random.nextInt(37); // Simulamos el giro de la ruleta
+
+        if (resultado % 2 == 0) {
+            if (parImpar == 1)
+                ganar(apuesta * 2);
+            else
+                perder(apuesta);
+        } else {
+            if (parImpar == 2)
+                ganar(apuesta * 2);
+            else
+                perder(apuesta);
+        }
+    }
+
     private static double solicitarApuesta(Scanner scanner) {
         System.out.println("Seleccione la cantidad de apuesta:");
         System.out.println("1. $0.2");
