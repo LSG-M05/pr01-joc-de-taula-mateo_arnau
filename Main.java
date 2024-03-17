@@ -41,7 +41,9 @@ public class Main {
         } while (opcion != 5);
     }
 
-
+    /**
+     * Consulta y muestra el saldo actual.
+     */
     public static void consultarSaldo() {
         System.out.println("Saldo actual: $" + saldo);
     }
