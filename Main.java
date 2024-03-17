@@ -3,12 +3,19 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Clase principal que contiene el programa del casino.
+ */
 public class Main {
     private static double saldo = 500.0;
     private static final char[] SIMBOLOS = {'0', 'B', 'A', '&', '#', '@', '$'};
     private static final double[] GANANCIAS = {0.5, 0.8, 1.0, 1.5, 2.0, 2.5, 4.0, 1.0, 1.5, 2.0, 3.0, 5.0, 10.0, 50.0};
     private static Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Método principal que inicia el programa del casino.
+     * @param args Argumentos de línea de comandos (no se utilizan).
+     */
     public static void main(String[] args) {
         int opcion;
         do {
@@ -42,10 +49,16 @@ public class Main {
         } while (opcion != 5);
     }
 
+    /**
+     * Método para consultar el saldo actual.
+     */
     public static void consultarSaldo() {
         System.out.println("Saldo actual: $" + saldo);
     }
 
+    /**
+     * Método que implementa el juego de blackjack.
+     */
     public static void blackjack() {
         System.out.println("--- Blackjack ---");
         System.out.println("Tu saldo actual es: $" + saldo);
@@ -113,6 +126,9 @@ public class Main {
         }
     }
 
+    /**
+     * Método que implementa el juego de las tragamonedas.
+     */
     public static void slot() {
         if (saldo <= 0) {
             System.out.println("No tienes suficiente saldo para apostar. ¡Recarga tu cuenta!");
@@ -150,6 +166,9 @@ public class Main {
         }
     }
 
+    /**
+     * Método que implementa el juego de la ruleta.
+     */
     public static void rizzRoulette() {
         if (saldo <= 0) {
             System.out.println("No tienes suficiente saldo para apostar. ¡Recarga tu cuenta!");
@@ -187,6 +206,10 @@ public class Main {
         }
     }
 
+    /**
+     * Método para realizar una apuesta en el juego de la ruleta por color.
+     * @param apuesta La cantidad apostada.
+     */
     private static void apostarColor(double apuesta) {
         System.out.println("Seleccione el color:");
         System.out.println("1. Rojo");
@@ -201,6 +224,10 @@ public class Main {
             perder(apuesta);
     }
 
+    /**
+     * Método para realizar una apuesta en el juego de la ruleta por par o impar.
+     * @param apuesta La cantidad apostada.
+     */
     private static void apostarParImpar(double apuesta) {
         System.out.println("Seleccione par o impar:");
         System.out.println("1. Par");
@@ -223,6 +250,10 @@ public class Main {
         }
     }
 
+    /**
+     * Método para realizar una apuesta en el juego de la ruleta por número.
+     * @param apuesta La cantidad apostada.
+     */
     private static void apostarNumero(double apuesta) {
         System.out.println("Seleccione el número (0-36):");
         int numero = scanner.nextInt();
@@ -236,6 +267,10 @@ public class Main {
             perder(apuesta);
     }
 
+    /**
+     * Método para realizar una apuesta en el juego de la ruleta por cuadrante.
+     * @param apuesta La cantidad apostada.
+     */
     private static void apostarCuadrante(double apuesta) {
         System.out.println("Seleccione el cuadrante:");
         System.out.println("1. Cuadrante 1 (1-9)");
@@ -277,24 +312,10 @@ public class Main {
         }
     }
 
-    enum Color {
-        ROJO,
-        NEGRO,
-        VERDE
-    }
-
-    private static void ganar(double monto) {
-        saldo += monto;
-        System.out.println("¡GANASTE! Ganancia: $" + monto);
-        System.out.println("Saldo actual: " +saldo);
-    }
-
-    private static void perder(double monto) {
-        saldo -= monto;
-        System.out.println("Perdiste. ¡Suerte la próxima vez!");
-        System.out.println("Saldo actual: " +saldo);
-    }
-
+    /**
+     * Método para generar un color aleatorio en el juego de la ruleta.
+     * @return El color generado.
+     */
     private static Color generarColor() {
         Random random = new Random();
         int resultado = random.nextInt(37);
@@ -306,6 +327,30 @@ public class Main {
             return Color.NEGRO;
     }
 
+    /**
+     * Método para gestionar la victoria del jugador.
+     * @param monto El monto ganado.
+     */
+    private static void ganar(double monto) {
+        saldo += monto;
+        System.out.println("¡GANASTE! Ganancia: $" + monto);
+        System.out.println("Saldo actual: " +saldo);
+    }
+
+    /**
+     * Método para gestionar la pérdida del jugador.
+     * @param monto El monto perdido.
+     */
+    private static void perder(double monto) {
+        saldo -= monto;
+        System.out.println("Perdiste. ¡Suerte la próxima vez!");
+        System.out.println("Saldo actual: " +saldo);
+    }
+
+    /**
+     * Método para solicitar la apuesta del jugador.
+     * @return La cantidad apostada.
+     */
     private static double solicitarApuesta() {
         System.out.println("Seleccione la cantidad de apuesta:");
         System.out.println("1. $0.2");
@@ -322,6 +367,11 @@ public class Main {
         return obtenerApuesta(opcionApuesta);
     }
 
+    /**
+     * Método para obtener la cantidad apostada según la opción seleccionada.
+     * @param opcion La opción seleccionada.
+     * @return La cantidad apostada.
+     */
     private static double obtenerApuesta(int opcion) {
         switch (opcion) {
             case 1:
@@ -348,11 +398,19 @@ public class Main {
         }
     }
 
+    /**
+     * Método para solicitar al jugador el número de veces que desea girar en las tragamonedas.
+     * @return El número de veces a girar.
+     */
     private static int solicitarVecesGirar() {
         System.out.println("¿Cuántas veces deseas girar (1 o 5)?");
         return scanner.nextInt();
     }
 
+    /**
+     * Método para generar símbolos aleatorios en las tragamonedas.
+     * @return Un arreglo con los símbolos generados.
+     */
     private static char[] generarSimbolos() {
         Random random = new Random();
         char[] simbolos = new char[3];
@@ -362,10 +420,20 @@ public class Main {
         return simbolos;
     }
 
+    /**
+     * Método para mostrar los símbolos generados en las tragamonedas.
+     * @param simbolos Los símbolos a mostrar.
+     */
     private static void mostrarSimbolos(char[] simbolos) {
         System.out.println("[" + simbolos[0] + "] [" + simbolos[1] + "] [" + simbolos[2] + "]");
     }
 
+    /**
+     * Método para calcular las ganancias en las tragamonedas.
+     * @param simbolos Los símbolos obtenidos.
+     * @param apuesta La cantidad apostada.
+     * @return Las ganancias calculadas.
+     */
     private static double calcularGanancia(char[] simbolos, double apuesta) {
         String combinacion = "" + simbolos[0] + simbolos[1] + simbolos[2];
         for (int i = 0; i < SIMBOLOS.length; i++) {
@@ -378,6 +446,10 @@ public class Main {
         return -apuesta;
     }
 
+    /**
+     * Método para crear un mazo de cartas para el blackjack.
+     * @return Una lista de cartas (mazo).
+     */
     public static List<String> crearMazo() {
         List<String> mazo = new ArrayList<>();
         String[] palos = {"Corazones", "Diamantes", "Tréboles", "Picas"};
@@ -391,6 +463,10 @@ public class Main {
         return mazo;
     }
 
+    /**
+     * Método para barajar el mazo de cartas para el blackjack.
+     * @param mazo El mazo a barajar.
+     */
     public static void barajarMazo(List<String> mazo) {
         Random random = new Random();
         for (int i = mazo.size() - 1; i > 0; i--) {
@@ -401,50 +477,70 @@ public class Main {
         }
     }
 
+    /**
+     * Método para repartir una carta desde el mazo en el blackjack.
+     * @param mano La mano del jugador o crupier.
+     * @param mazo El mazo del que se reparte la carta.
+     */
     public static void repartirCarta(List<String> mano, List<String> mazo) {
         mano.add(mazo.remove(0));
     }
 
-    public static int calcularValorMano(List<String> mano) {
+    /**
+     * Método para mostrar la mano del jugador o crupier con los valores de las cartas en el blackjack.
+     * @param mano La mano del jugador o crupier.
+     */
+    public static void mostrarManoConValores(List<String> mano) {
+        System.out.print("Mano: ");
         int valor = 0;
-        int ases = 0;
-
+        boolean tieneAs = false;
         for (String carta : mano) {
-            String valorCarta = carta.split(" ")[0];
+            System.out.print(carta + " ");
+            String[] partes = carta.split(" ");
+            String valorCarta = partes[0];
             if (valorCarta.equals("As")) {
-                ases++;
-                valor += 11;
+                tieneAs = true;
             } else if (valorCarta.equals("J") || valorCarta.equals("Q") || valorCarta.equals("K")) {
                 valor += 10;
             } else {
                 valor += Integer.parseInt(valorCarta);
             }
         }
-
-        while (valor > 21 && ases > 0) {
-            valor -= 10;
-            ases--;
+        if (tieneAs && valor + 10 <= 21) {
+            valor += 10;
         }
+        System.out.println("(valor: " + valor + ")");
+    }
 
+    /**
+     * Método para calcular el valor de la mano del jugador o crupier en el blackjack.
+     * @param mano La mano del jugador o crupier.
+     * @return El valor de la mano.
+     */
+    public static int calcularValorMano(List<String> mano) {
+        int valor = 0;
+        boolean tieneAs = false;
+        for (String carta : mano) {
+            String[] partes = carta.split(" ");
+            String valorCarta = partes[0];
+            if (valorCarta.equals("As")) {
+                tieneAs = true;
+            } else if (valorCarta.equals("J") || valorCarta.equals("Q") || valorCarta.equals("K")) {
+                valor += 10;
+            } else {
+                valor += Integer.parseInt(valorCarta);
+            }
+        }
+        if (tieneAs && valor + 10 <= 21) {
+            valor += 10;
+        }
         return valor;
     }
 
-    public static void mostrarManoConValores(List<String> mano) {
-        System.out.print("Tu mano: [");
-        for (int i = 0; i < mano.size(); i++) {
-            String carta = mano.get(i);
-            String valorCarta = carta.split(" ")[0];
-            if (i > 0) {
-                System.out.print(", ");
-            }
-            if (valorCarta.equals("J") || valorCarta.equals("Q") || valorCarta.equals("K")) {
-                System.out.print(carta + " (10)");
-            } else if (valorCarta.equals("As")) {
-                System.out.print(carta + " (11/1)");
-            } else {
-                System.out.print(carta + " (" + valorCarta + ")");
-            }
-        }
-        System.out.println("]");
+    /**
+     * Enumeración para representar los colores en el juego de la ruleta.
+     */
+    private enum Color {
+        ROJO, NEGRO, VERDE
     }
 }
