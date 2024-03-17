@@ -286,13 +286,13 @@ public class Main {
     private static void ganar(double monto) {
         saldo += monto;
         System.out.println("¡GANASTE! Ganancia: $" + monto);
-        System.out.println("Saldo actual: " +saldo);
+        System.out.println("Saldo actual: $" +saldo);
     }
 
     private static void perder(double monto) {
         saldo -= monto;
         System.out.println("Perdiste. ¡Suerte la próxima vez!");
-        System.out.println("Saldo actual: " +saldo);
+        System.out.println("Saldo actual: $" +saldo);
     }
 
     private static Color generarColor() {
