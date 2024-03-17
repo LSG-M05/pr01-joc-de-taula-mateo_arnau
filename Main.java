@@ -1,14 +1,15 @@
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
     private static double saldo = 500.0;
     private static final char[] SIMBOLOS = {'0', 'B', 'A', '&', '#', '@', '$'};
     private static final double[] GANANCIAS = {0.5, 0.8, 1.0, 1.5, 2.0, 2.5, 4.0, 1.0, 1.5, 2.0, 3.0, 5.0, 10.0, 50.0};
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
         int opcion;
         do {
             System.out.println("Bienvenido a nuestro casino!!!");
@@ -27,10 +28,10 @@ public class Main {
                     blackjack();
                     break;
                 case 3:
-                    slot(scanner);
+                    slot();
                     break;
                 case 4:
-                    rizzRoulette(scanner);
+                    rizzRoulette();
                     break;
                 case 5:
                     System.out.println("Saliendo...");
@@ -41,31 +42,91 @@ public class Main {
         } while (opcion != 5);
     }
 
-    /**
-     * Consulta y muestra el saldo actual.
-     */
     public static void consultarSaldo() {
         System.out.println("Saldo actual: $" + saldo);
     }
 
     public static void blackjack() {
+        System.out.println("--- Blackjack ---");
+        System.out.println("Tu saldo actual es: $" + saldo);
+        double apuesta = solicitarApuesta();
 
+        if (apuesta > saldo) {
+            System.out.println("No tienes suficiente saldo para realizar esa apuesta.");
+            return;
+        }
+
+        List<String> deck = crearMazo();
+        barajarMazo(deck);
+
+        List<String> manoJugador = new ArrayList<>();
+        List<String> manoCrupier = new ArrayList<>();
+        repartirCarta(manoJugador, deck);
+        repartirCarta(manoCrupier, deck);
+        repartirCarta(manoJugador, deck);
+        repartirCarta(manoCrupier, deck);
+
+        mostrarManoConValores(manoJugador);
+        System.out.println("Mano del crupier: [" + manoCrupier.get(0) + ", ***]");
+
+        if (calcularValorMano(manoJugador) == 21) {
+            System.out.println("¡Blackjack! ¡Felicidades! Has ganado $" + (apuesta * 2.5) + ".");
+            saldo += apuesta * 2.5;
+            return;
+        }
+
+        while (true) {
+            System.out.print("¿Quieres pedir otra carta o plantarte? (pedir/plantar): ");
+            String decision = scanner.next();
+            if (decision.equalsIgnoreCase("pedir")) {
+                repartirCarta(manoJugador, deck);
+                mostrarManoConValores(manoJugador);
+                if (calcularValorMano(manoJugador) > 21) {
+                    System.out.println("Te has pasado de 21. Has perdido $" + apuesta + ".");
+                    saldo -= apuesta;
+                    return;
+                }
+            } else if (decision.equalsIgnoreCase("plantar")) {
+                break;
+            } else {
+                System.out.println("Opción inválida. Por favor, ingresa 'pedir' o 'plantar'.");
+            }
+        }
+
+        mostrarManoConValores(manoCrupier);
+        while (calcularValorMano(manoCrupier) < 17) {
+            repartirCarta(manoCrupier, deck);
+            mostrarManoConValores(manoCrupier);
+        }
+
+        int valorJugador = calcularValorMano(manoJugador);
+        int valorCrupier = calcularValorMano(manoCrupier);
+
+        if (valorJugador > valorCrupier || valorCrupier > 21) {
+            System.out.println("¡Felicidades! Has ganado $" + apuesta + ".");
+            saldo += apuesta;
+        } else if (valorJugador == valorCrupier) {
+            System.out.println("Es un empate. No ganas ni pierdes dinero.");
+        } else {
+            System.out.println("El crupier gana. Has perdido $" + apuesta + ".");
+            saldo -= apuesta;
+        }
     }
 
-    public static void slot(Scanner scanner) {
+    public static void slot() {
         if (saldo <= 0) {
             System.out.println("No tienes suficiente saldo para apostar. ¡Recarga tu cuenta!");
             return;
         }
 
-        double apuesta = solicitarApuesta(scanner);
+        double apuesta = solicitarApuesta();
 
         if (apuesta > saldo) {
             System.out.println("No puedes apostar más de lo que tienes en tu saldo.");
             return;
         }
 
-        int vecesGirar = solicitarVecesGirar(scanner);
+        int vecesGirar = solicitarVecesGirar();
 
         for (int i = 0; i < vecesGirar; i++) {
             char[] simbolos = generarSimbolos();
@@ -89,14 +150,13 @@ public class Main {
         }
     }
 
-
-    public static void rizzRoulette(Scanner scanner) {
+    public static void rizzRoulette() {
         if (saldo <= 0) {
             System.out.println("No tienes suficiente saldo para apostar. ¡Recarga tu cuenta!");
             return;
         }
 
-        double apuesta = solicitarApuesta(scanner);
+        double apuesta = solicitarApuesta();
         if (apuesta > saldo) {
             System.out.println("No puedes apostar más de lo que tienes en tu saldo.");
             return;
@@ -111,24 +171,23 @@ public class Main {
 
         switch (tipoApuesta) {
             case 1:
-                apostarColor(scanner, apuesta);
+                apostarColor(apuesta);
                 break;
             case 2:
-                apostarParImpar(scanner, apuesta);
+                apostarParImpar(apuesta);
                 break;
             case 3:
-                apostarNumero(scanner, apuesta);
+                apostarNumero(apuesta);
                 break;
             case 4:
-                apostarCuadrante(scanner, apuesta);
+                apostarCuadrante(apuesta);
                 break;
             default:
                 System.out.println("Opción no válida.");
         }
     }
 
-
-    private static void apostarColor(Scanner scanner, double apuesta) {
+    private static void apostarColor(double apuesta) {
         System.out.println("Seleccione el color:");
         System.out.println("1. Rojo");
         System.out.println("2. Negro");
@@ -142,7 +201,7 @@ public class Main {
             perder(apuesta);
     }
 
-    private static void apostarParImpar(Scanner scanner, double apuesta) {
+    private static void apostarParImpar(double apuesta) {
         System.out.println("Seleccione par o impar:");
         System.out.println("1. Par");
         System.out.println("2. Impar");
@@ -164,7 +223,7 @@ public class Main {
         }
     }
 
-    private static void apostarNumero(Scanner scanner, double apuesta) {
+    private static void apostarNumero(double apuesta) {
         System.out.println("Seleccione el número (0-36):");
         int numero = scanner.nextInt();
 
@@ -177,7 +236,7 @@ public class Main {
             perder(apuesta);
     }
 
-    private static void apostarCuadrante(Scanner scanner, double apuesta) {
+    private static void apostarCuadrante(double apuesta) {
         System.out.println("Seleccione el cuadrante:");
         System.out.println("1. Cuadrante 1 (1-9)");
         System.out.println("2. Cuadrante 2 (10-18)");
@@ -218,7 +277,6 @@ public class Main {
         }
     }
 
-
     enum Color {
         ROJO,
         NEGRO,
@@ -248,9 +306,7 @@ public class Main {
             return Color.NEGRO;
     }
 
-
-
-    private static double solicitarApuesta(Scanner scanner) {
+    private static double solicitarApuesta() {
         System.out.println("Seleccione la cantidad de apuesta:");
         System.out.println("1. $0.2");
         System.out.println("2. $0.4");
@@ -292,7 +348,7 @@ public class Main {
         }
     }
 
-    private static int solicitarVecesGirar(Scanner scanner) {
+    private static int solicitarVecesGirar() {
         System.out.println("¿Cuántas veces deseas girar (1 o 5)?");
         return scanner.nextInt();
     }
@@ -322,6 +378,73 @@ public class Main {
         return -apuesta;
     }
 
+    public static List<String> crearMazo() {
+        List<String> mazo = new ArrayList<>();
+        String[] palos = {"Corazones", "Diamantes", "Tréboles", "Picas"};
+        String[] valores = {"As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 
+        for (String palo : palos) {
+            for (String valor : valores) {
+                mazo.add(valor + " de " + palo);
+            }
+        }
+        return mazo;
     }
 
+    public static void barajarMazo(List<String> mazo) {
+        Random random = new Random();
+        for (int i = mazo.size() - 1; i > 0; i--) {
+            int index = random.nextInt(i + 1);
+            String temp = mazo.get(index);
+            mazo.set(index, mazo.get(i));
+            mazo.set(i, temp);
+        }
+    }
+
+    public static void repartirCarta(List<String> mano, List<String> mazo) {
+        mano.add(mazo.remove(0));
+    }
+
+    public static int calcularValorMano(List<String> mano) {
+        int valor = 0;
+        int ases = 0;
+
+        for (String carta : mano) {
+            String valorCarta = carta.split(" ")[0];
+            if (valorCarta.equals("As")) {
+                ases++;
+                valor += 11;
+            } else if (valorCarta.equals("J") || valorCarta.equals("Q") || valorCarta.equals("K")) {
+                valor += 10;
+            } else {
+                valor += Integer.parseInt(valorCarta);
+            }
+        }
+
+        while (valor > 21 && ases > 0) {
+            valor -= 10;
+            ases--;
+        }
+
+        return valor;
+    }
+
+    public static void mostrarManoConValores(List<String> mano) {
+        System.out.print("Tu mano: [");
+        for (int i = 0; i < mano.size(); i++) {
+            String carta = mano.get(i);
+            String valorCarta = carta.split(" ")[0];
+            if (i > 0) {
+                System.out.print(", ");
+            }
+            if (valorCarta.equals("J") || valorCarta.equals("Q") || valorCarta.equals("K")) {
+                System.out.print(carta + " (10)");
+            } else if (valorCarta.equals("As")) {
+                System.out.print(carta + " (11/1)");
+            } else {
+                System.out.print(carta + " (" + valorCarta + ")");
+            }
+        }
+        System.out.println("]");
+    }
+}
