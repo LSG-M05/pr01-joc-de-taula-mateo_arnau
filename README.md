@@ -1,5 +1,5 @@
 
-# Temàtica
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=35&duration=3000&pause=1000&color=F70000&center=true&random=false&width=535&height=70&lines=%F0%9F%83%8F+Casino+%F0%9F%83%8F)](https://git.io/typing-svg)
 
 El programa consistirá en un casino virtual con algunos juegos para jugar. Los juegos serán Blackjack, una ruleta y un Bingo.
 ##Mateo Achá y Arnau Gil
