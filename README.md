@@ -10,7 +10,7 @@
 <hr>
 
 <h2>Menú :game_die:</h2>
-<p>En primer lugar, el casino te preguntará si tienes más de 18 años, luego tendrás que introducir tu nombre. Después de introducir tu nombre, tendrás que depositar la cantidad de dinero que deseas apostar. Después de eso, se desplegará un menú con 3 opciones entre las cuales podrás elegir: Ruleta, Blackjack y Bingo.</p>
+<p>En primer lugar, el casino te preguntará si tienes más de 18 años, luego tendrás que introducir tu nombre. Después de introducir tu nombre, tendrás que depositar la cantidad de dinero que deseas apostar. Después de eso, se desplegará un menú con 3 opciones entre las cuales podrás elegir: Ruleta, Blackjack y Slot.</p>
 
 <hr>
 
@@ -40,9 +40,7 @@
 <ul>
   <li>Pedir (Hit): Solicitar una carta adicional para mejorar su mano.</li>
   <li>Plantarse (Stand): Rechazar cartas adicionales y conservar su mano actual.</li>
-  <li>Dividir (Split): Si las dos primeras cartas del jugador tienen el mismo valor (por ejemplo, dos 7 o dos Reinas), pueden optar por dividirlas en dos manos separadas, cada una con su propia apuesta. Se reparten cartas adicionales a cada mano dividida, y el jugador juega cada mano independientemente.</li>
-  <li>Doblar (Double Down): Después de recibir sus dos primeras cartas, los jugadores pueden optar por duplicar su apuesta original a cambio de recibir solo una carta más. Esta opción suele estar disponible solo cuando las dos primeras cartas del jugador suman 9, 10 u 11.</li>
-  <li>Rendirse (Surrender): En algunas variaciones del juego, los jugadores tienen la opción de rendirse, perdiendo la mitad de su apuesta y finalizando la mano temprano si creen que tienen una baja probabilidad de ganar.</li>
+ 
 </ul>
 
 <p><strong>Turno del Crupier:</strong> Una vez que todos los jugadores hayan completado sus acciones, el crupier revela su carta boca abajo. El crupier debe pedir carta hasta que su mano alcance un total de 17 o más. Es posible que al crupier se le exija pedir carta en un "17 suave" (una mano que contiene un As valorado en 11).</p>
